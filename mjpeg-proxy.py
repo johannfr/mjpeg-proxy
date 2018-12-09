@@ -21,10 +21,6 @@ class MJEPGClient(threading.Thread):
 
     def run(self):
         client_socket = socket.socket(family=socket.AF_INET, type=socket.SOCK_STREAM)
-        if self.url_components.port:
-            port = self.url_components.port
-        else:
-            port = 80
         remote_host = self.url_components.netloc.split(':')[0]
         remote_port = int(self.url_components.port) if self.url_components.port is not None else 80
         self.log.info('Connecting to {}:{}'.format(remote_host, remote_port))
