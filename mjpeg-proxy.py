@@ -73,7 +73,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
             self.server.mjpegclient.receivers += 1
         self.out_queue = Queue()
         request_buffer = bytes()
-        while True:
+        for i in range(10):
             request_buffer += self.request.recv(1024)
             if b'\r\n\r\n' in request_buffer:
                 # We have one purpose only.
