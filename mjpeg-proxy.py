@@ -73,8 +73,13 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
             self.server.mjpegclient.receivers += 1
         self.out_queue = Queue()
         request_buffer = bytes()
-        for i in range(10):
+        header_counter = 0
+        while True:
+            if header_counter == 10:
+                self.request.send("Asshole.\r\n")
+                return
             request_buffer += self.request.recv(1024)
+            header_counter += 1
             if b'\r\n\r\n' in request_buffer:
                 # We have one purpose only.
                 # We don't care what the client has to say.
